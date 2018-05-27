@@ -1,0 +1,28 @@
+{
+  "name": "dapp-boilerplate",
+  "version": "1.0.0",
+  "description": "Minimum dApp boilerplate with Parcel, React, Redux and Truffle",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel ./src/index.html -p 3000",
+    "build": "parcel build ./src/index.html"
+  },
+  "keywords": [
+    "parcel",
+    "react"
+  ],
+  "author": "Shunsuke(http://shunsuke.me/blog-ja)",
+  "license": "MIT",
+  "dependencies": {
+    "openzeppelin-solidity": "^1.9.0",
+    "prop-types": "^15.6.1",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "react-hot-loader": "^4.2.0",
+    "web3": "^0.20.0"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.8.1",
+    "stylus": "^0.54.5"
+  }
+}
