@@ -9,11 +9,15 @@ import { store } from './store'
 import ChatInput from './ChatInput'
 import ChatHistory from './ChatHistory'
 import ChangeFriend from './ChangeFriend'
-import { fetchHistoryRequestAction, sendMessageRequestAction, setFriendAction } from './actions'
+import { fetchHistoryRequestAction, sendMessageRequestAction, setFriendAction, fetchWeb3ConnectionRequestAction } from './actions'
 
 class App extends Component {
   componentWillMount() {
-      store.dispatch(setFriendAction("0x7777777777777777"))
+      store.dispatch(fetchWeb3ConnectionRequestAction())
+  }
+
+  componentDidMount() {
+      store.dispatch(fetchWeb3ConnectionRequestAction())
   }
 
   render() {
