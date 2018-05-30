@@ -16,10 +16,6 @@ class App extends Component {
       store.dispatch(fetchWeb3ConnectionRequestAction())
   }
 
-  componentDidMount() {
-      store.dispatch(fetchWeb3ConnectionRequestAction())
-  }
-
   render() {
     const { userAddress, friendAddress, history, fetchHistory, changeFriend, sendMessage } = this.props
     return (
@@ -36,7 +32,10 @@ function mapDispatchToProps (dispatch, ownProps) {
     return {
         fetchHistory: () => dispatch(fetchHistoryRequestAction()),
         sendMessage: (msg) => dispatch(sendMessageRequestAction(msg)),
-        changeFriend: (address) => dispatch(setFriendAction(address)),
+        changeFriend: (address) => {
+            dispatch(setFriendAction(address))
+            dispatch(fetchHistoryRequestAction())
+        },
     }
 }
 
