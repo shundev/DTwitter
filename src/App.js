@@ -5,6 +5,7 @@ import { createStore } from 'redux'
 import PropTypes from 'prop-types'
 import getWeb3 from './getWeb3'
 
+import { store } from './store'
 import ChatInput from './ChatInput'
 import ChatHistory from './ChatHistory'
 import ChangeFriend from './ChangeFriend'
@@ -12,6 +13,7 @@ import { fetchHistoryRequestAction, sendMessageRequestAction, setFriendAction } 
 
 class App extends Component {
   componentWillMount() {
+      store.dispatch(setFriendAction("0x7777777777777777"))
   }
 
   render() {
@@ -28,9 +30,9 @@ class App extends Component {
 
 function mapDispatchToProps (dispatch, ownProps) {
     return {
-        fetchHistory: dispatch(fetchHistoryRequestAction()),
-        sendMessage: dispatch(sendMessageRequestAction()),
-        changeFriend: dispatch(setFriendAction()),
+        fetchHistory: () => dispatch(fetchHistoryRequestAction()),
+        sendMessage: (msg) => dispatch(sendMessageRequestAction(msg)),
+        changeFriend: (address) => dispatch(setFriendAction(address)),
     }
 }
 
