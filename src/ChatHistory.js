@@ -4,11 +4,6 @@ import PropTypes from 'prop-types'
 import './ChatHistory.styl'
 
 export default class ChatHistory extends React.Component {
-  componentDidMount() {
-      console.log("History.componentDidMount")
-     // this.props.getHistory()
-  }
-
   render() {
     return (
       <ul className="collection">
@@ -34,9 +29,4 @@ export default class ChatHistory extends React.Component {
       </ul>
     )
   }
-}
-
-ChatHistory.propTypes = {
-  history: PropTypes.arrayOf(PropTypes.object),
-  getHistory: PropTypes.func,
 }

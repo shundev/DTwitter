@@ -36,8 +36,3 @@ export default class ChangeFriend extends React.Component {
     )
   }
 }
-
-ChangeFriend.propTypes = {
-  friendAddress: PropTypes.string,
-  changeFriend: PropTypes.func,
-}

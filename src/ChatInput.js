@@ -52,9 +52,3 @@ export default class ChatInput extends React.Component {
       )
   }
 }
-
-ChatInput.propTypes = {
-  userAddress: PropTypes.string,
-  friendAddress: PropTypes.string,
-  sendMessage: PropTypes.func,
-}
