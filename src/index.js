@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 
 import { store, sagaMiddleware } from './store'
 import rootSage from './sagas'
-import App from './App';
+import App from './containers/App';
 
 sagaMiddleware.run(rootSage);
 

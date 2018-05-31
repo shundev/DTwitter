@@ -2,14 +2,12 @@ import 'babel-polyfill'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { createStore } from 'redux'
-import PropTypes from 'prop-types'
-import getWeb3 from './getWeb3'
 
-import { store } from './store'
-import ChatInput from './ChatInput'
-import ChatHistory from './ChatHistory'
-import ChangeFriend from './ChangeFriend'
-import * as actionTypes from './constants/actionTypes'
+import { store } from '../store'
+import ChatInput from '../components/ChatInput'
+import ChatHistory from '../components/ChatHistory'
+import ChangeFriend from '../components/ChangeFriend'
+import * as actionTypes from '../constants/actionTypes'
 
 class App extends Component {
   componentWillMount() {

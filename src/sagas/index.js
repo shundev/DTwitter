@@ -1,4 +1,4 @@
-import getWeb3 from '../getWeb3'
+import getWeb3 from '../helpers/getWeb3'
 import { takeEvery, takeLatest, take, select, fork, call, put, all } from 'redux-saga/effects'
 
 import * as actionTypes from '../constants/actionTypes'
@@ -47,7 +47,7 @@ function* sendMessageAsync (action)
         What: action.payload,
         When: (new Date().valueOf()) / 1000
     }
-    yield put({ type: ADD_MESSAGE, payload: dummyMsg })
+    yield put({ type: actionTypes.ADD_MESSAGE, payload: dummyMsg })
 
     // 本メッセージを送信
     yield sendMessage(contractInstance, userAddress, friendAddress, action.payload)
