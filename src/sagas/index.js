@@ -2,6 +2,7 @@ import getWeb3 from '../getWeb3'
 import { takeEvery, takeLatest, take, select, fork, call, put, all } from 'redux-saga/effects'
 
 import {
+    ADD_MESSAGE,
     FETCH_HISTORY_REQUESTED,
     FETCH_HISTORY_SUCCESS,
     SEND_MESSAGE_REQUESTED,
@@ -9,17 +10,17 @@ import {
     FETCH_WEB3_CONNECTION_SUCCESS
 } from '../constants'
 import { dmsgContract } from '../contracts'
+import store from '../store'
 
 function* watchAndLog() {
   while (true) {
     const action = yield take('*')
     const state = yield select()
     console.log('action', action)
-    console.log('state after', state)
   }
 }
 
-function* fetchHistory (action)
+function* fetchHistoryAsync (action)
 {
     const { contractInstance, userAddress, friendAddress } = yield select()
     const messageIds = yield getMessages(contractInstance, userAddress, friendAddress)
@@ -32,21 +33,34 @@ function* fetchHistory (action)
     const messages = yield all(getMessageWorkers)
     yield put({
         type: FETCH_HISTORY_SUCCESS,
-        payload: messages.sort(messageComparer).map(msg => {
+        payload: messages.map(msg => {
             return {
             Id: msg[0],
             Who: msg[1],
             What: msg[3],
             When: msg[4]
-        }})
+        }}).sort(messageComparer)
     })
 }
 
-function* sendMessage (action)
+function* sendMessageAsync (action)
 {
+    const { contractInstance, userAddress, friendAddress } = yield select()
+
+    // マイニング完了まで表示する仮メッセージ
+    const dummyMsg = {
+        Id: Math.floor(Math.random() * 100000000),
+        Who: userAddress,
+        What: action.payload,
+        When: (new Date().valueOf()) / 1000
+    }
+    yield put({ type: ADD_MESSAGE, payload: dummyMsg })
+
+    // 本メッセージを送信
+    yield sendMessage(contractInstance, userAddress, friendAddress, action.payload)
 }
 
-function* fetchWeb3Connection() {
+function* fetchWeb3ConnectionAsync() {
     yield take(FETCH_WEB3_CONNECTION_REQUESTED)
     const { web3 } = yield getWeb3
     const accounts = yield getAccounts
@@ -54,12 +68,12 @@ function* fetchWeb3Connection() {
 
     instance.MessageSent({recipient: accounts[0]})
     .watch((err, result) => {
-        // yield put({ type: FETCH_HISTORY_REQUESTED })
+        store.dispatch({ type: FETCH_HISTORY_REQUESTED})
     })
 
     instance.MessageSent({sender: accounts[0]})
     .watch((err, result) => {
-        // yield put({ type: FETCH_HISTORY_REQUESTED })
+        store.dispatch({ type: FETCH_HISTORY_REQUESTED})
     })
 
     yield put({
@@ -92,6 +106,17 @@ const getMessages = (dmsgContractInstance, userAddress, friendAddress) => {
     })
 }
 
+const sendMessage = (dmsgContractInstance, userAddress, friendAddress, message) => {
+    return new Promise(function(resolve, reject) {
+        dmsgContractInstance.sendMessage.sendTransaction(
+            friendAddress,
+            message,
+            {from: userAddress},
+            (err, result) => { resolve(result) }
+        )
+    })
+}
+
 const messageComparer = (m1, m2) => {
     if (m1.When > m2.When) {
         return 1;
@@ -104,8 +129,8 @@ const messageComparer = (m1, m2) => {
 
 export default function* rootSaga ()
 {
-    yield takeLatest(FETCH_HISTORY_REQUESTED, fetchHistory)
-    yield takeEvery(SEND_MESSAGE_REQUESTED, sendMessage)
-    yield fork(fetchWeb3Connection)
+    yield takeLatest(FETCH_HISTORY_REQUESTED, fetchHistoryAsync)
+    yield takeEvery(SEND_MESSAGE_REQUESTED, sendMessageAsync)
+    yield fork(fetchWeb3ConnectionAsync)
     yield fork(watchAndLog)
 }

@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import { fromJS } from 'immutable'
 
-import { SET_FRIEND_ADDRESS, SET_USER_ADDRESS, FETCH_WEB3_CONNECTION_SUCCESS, FETCH_HISTORY_SUCCESS } from '../constants';
+import { ADD_MESSAGE, SET_FRIEND_ADDRESS, SET_USER_ADDRESS, FETCH_WEB3_CONNECTION_SUCCESS, FETCH_HISTORY_SUCCESS } from '../constants';
 
 const INITIAL_STATE = {
     userAddress: "0x0",
@@ -15,6 +15,10 @@ export default function dmsgReducer(state = INITIAL_STATE, action = {})
 {
     switch (action.type)
     {
+        case ADD_MESSAGE:
+            return Object.assign({}, state, {
+                history: state.history.concat(action.payload)
+            })
         case SET_USER_ADDRESS:
             return Object.assign({}, state, {
                 userAddress: action.payload

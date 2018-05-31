@@ -16,6 +16,10 @@ class App extends Component {
       store.dispatch(fetchWeb3ConnectionRequestAction())
   }
 
+  componentDidUpdate() {
+      this.scrollDown()
+  }
+
   render() {
     const { userAddress, friendAddress, history, fetchHistory, changeFriend, sendMessage } = this.props
     return (
@@ -26,6 +30,11 @@ class App extends Component {
       </div>
     );
   }
+
+  scrollDown() {
+      window.scrollTo(0, document.body.scrollHeight);
+  }
+
 }
 
 function mapDispatchToProps (dispatch, ownProps) {
