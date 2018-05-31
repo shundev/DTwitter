@@ -1,14 +1,7 @@
 import getWeb3 from '../getWeb3'
 import { takeEvery, takeLatest, take, select, fork, call, put, all } from 'redux-saga/effects'
 
-import {
-    ADD_MESSAGE,
-    FETCH_HISTORY_REQUESTED,
-    FETCH_HISTORY_SUCCESS,
-    SEND_MESSAGE_REQUESTED,
-    FETCH_WEB3_CONNECTION_REQUESTED,
-    FETCH_WEB3_CONNECTION_SUCCESS
-} from '../constants'
+import * as actionTypes from '../constants/actionTypes'
 import { dmsgContract } from '../contracts'
 import store from '../store'
 
@@ -32,7 +25,7 @@ function* fetchHistoryAsync (action)
 
     const messages = yield all(getMessageWorkers)
     yield put({
-        type: FETCH_HISTORY_SUCCESS,
+        type: actionTypes.FETCH_HISTORY_SUCCESS,
         payload: messages.map(msg => {
             return {
             Id: msg[0],
@@ -61,29 +54,29 @@ function* sendMessageAsync (action)
 }
 
 function* fetchWeb3ConnectionAsync() {
-    yield take(FETCH_WEB3_CONNECTION_REQUESTED)
+    yield take(actionTypes.FETCH_WEB3_CONNECTION_REQUESTED)
     const { web3 } = yield getWeb3
     const accounts = yield getAccounts
     const instance = web3.eth.contract(dmsgContract.abi).at(dmsgContract.address)
 
     instance.MessageSent({recipient: accounts[0]})
     .watch((err, result) => {
-        store.dispatch({ type: FETCH_HISTORY_REQUESTED})
+        store.dispatch({ type: actionTypes.FETCH_HISTORY_REQUESTED})
     })
 
     instance.MessageSent({sender: accounts[0]})
     .watch((err, result) => {
-        store.dispatch({ type: FETCH_HISTORY_REQUESTED})
+        store.dispatch({ type: actionTypes.FETCH_HISTORY_REQUESTED})
     })
 
     yield put({
-        type: FETCH_WEB3_CONNECTION_SUCCESS,
+        type: actionTypes.FETCH_WEB3_CONNECTION_SUCCESS,
         web3: web3,
         userAddress: accounts[0],
         contractInstance: instance
     })
 
-    yield put({ type: FETCH_HISTORY_REQUESTED })
+    yield put({ type: actionTypes.FETCH_HISTORY_REQUESTED })
 }
 
 const getAccounts = new Promise(function(resolve, reject) {
@@ -129,8 +122,8 @@ const messageComparer = (m1, m2) => {
 
 export default function* rootSaga ()
 {
-    yield takeLatest(FETCH_HISTORY_REQUESTED, fetchHistoryAsync)
-    yield takeEvery(SEND_MESSAGE_REQUESTED, sendMessageAsync)
+    yield takeLatest(actionTypes.FETCH_HISTORY_REQUESTED, fetchHistoryAsync)
+    yield takeEvery(actionTypes.SEND_MESSAGE_REQUESTED, sendMessageAsync)
     yield fork(fetchWeb3ConnectionAsync)
     yield fork(watchAndLog)
 }

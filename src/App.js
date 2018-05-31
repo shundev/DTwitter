@@ -9,11 +9,11 @@ import { store } from './store'
 import ChatInput from './ChatInput'
 import ChatHistory from './ChatHistory'
 import ChangeFriend from './ChangeFriend'
-import { fetchHistoryRequestAction, sendMessageRequestAction, setFriendAction, fetchWeb3ConnectionRequestAction } from './actions'
+import * as actionTypes from './constants/actionTypes'
 
 class App extends Component {
   componentWillMount() {
-      store.dispatch(fetchWeb3ConnectionRequestAction())
+      store.dispatch({ type: actionTypes.FETCH_WEB3_CONNECTION_REQUESTED })
   }
 
   componentDidUpdate() {
@@ -39,11 +39,11 @@ class App extends Component {
 
 function mapDispatchToProps (dispatch, ownProps) {
     return {
-        fetchHistory: () => dispatch(fetchHistoryRequestAction()),
-        sendMessage: (msg) => dispatch(sendMessageRequestAction(msg)),
+        fetchHistory: () => dispatch({ type: actionTypes.FETCH_HISTORY_REQUESTED }),
+        sendMessage: (msg) => dispatch({ type: actionTypes.SEND_MESSAGE_REQUESTED, payload: msg }),
         changeFriend: (address) => {
-            dispatch(setFriendAction(address))
-            dispatch(fetchHistoryRequestAction())
+            dispatch({ type: actionTypes.SET_FRIEND_ADDRESS, payload: address })
+            dispatch({ type: actionTypes.FETCH_HISTORY_REQUESTED })
         },
     }
 }
