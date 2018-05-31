@@ -5,7 +5,7 @@ import * as actionTypes from '../constants/actionTypes';
 
 const INITIAL_STATE = {
     userAddress: "0x0",
-    friendAddress: "0xe31c5b5731f3Cba04f8CF3B1C8Eb6FCbdC66f4B5",
+    friendAddress: "0x0",
     history: [],
     web3: null,
     contractInstance: null,
