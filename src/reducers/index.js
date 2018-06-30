@@ -5,7 +5,6 @@ import * as actionTypes from '../constants/actionTypes';
 
 const INITIAL_STATE = {
     userAddress: "0x0",
-    friendAddress: "0x0",
     history: [],
     web3: null,
     contractInstance: null,
@@ -17,15 +16,11 @@ export default function dmsgReducer(state = INITIAL_STATE, action = {})
     {
         case actionTypes.ADD_MESSAGE:
             return Object.assign({}, state, {
-                history: state.history.concat(action.payload)
+                history: [action.payload].concat(state.history)
             })
         case actionTypes.SET_USER_ADDRESS:
             return Object.assign({}, state, {
                 userAddress: action.payload
-            })
-        case actionTypes.SET_FRIEND_ADDRESS:
-            return Object.assign({}, state, {
-                friendAddress: action.payload
             })
         case actionTypes.FETCH_WEB3_CONNECTION_SUCCESS:
             return Object.assign({}, state, {

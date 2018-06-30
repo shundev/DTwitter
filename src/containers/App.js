@@ -6,7 +6,6 @@ import { createStore } from 'redux'
 import { store } from '../store'
 import ChatInput from '../components/ChatInput'
 import ChatHistory from '../components/ChatHistory'
-import ChangeFriend from '../components/ChangeFriend'
 import * as actionTypes from '../constants/actionTypes'
 
 class App extends Component {
@@ -19,12 +18,11 @@ class App extends Component {
   }
 
   render() {
-    const { userAddress, friendAddress, history, fetchHistory, changeFriend, sendMessage } = this.props
+    const { userAddress, history, fetchHistory, sendMessage } = this.props
     return (
       <div className="App">
-        <ChangeFriend friendAddress={ friendAddress } changeFriend={ changeFriend } />
         <ChatHistory history={ history } fetchHistory={ fetchHistory }/>
-        <ChatInput userAddress={ userAddress } friendAddress={ friendAddress } sendMessage={ sendMessage } />
+        <ChatInput userAddress={ userAddress } sendMessage={ sendMessage } />
       </div>
     );
   }
@@ -39,10 +37,6 @@ function mapDispatchToProps (dispatch, ownProps) {
     return {
         fetchHistory: () => dispatch({ type: actionTypes.FETCH_HISTORY_REQUESTED }),
         sendMessage: (msg) => dispatch({ type: actionTypes.SEND_MESSAGE_REQUESTED, payload: msg }),
-        changeFriend: (address) => {
-            dispatch({ type: actionTypes.SET_FRIEND_ADDRESS, payload: address })
-            dispatch({ type: actionTypes.FETCH_HISTORY_REQUESTED })
-        },
     }
 }
 
