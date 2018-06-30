@@ -24,7 +24,7 @@ export default class ChatInput extends React.Component {
       const userImgURL = "//robohash.org/" + this.props.userAddress + "?set=set2&bgset=bg2&size=70x70"
 
       return (
-        <footer className="teal">
+        <div id="chatinput" className="blue">
           <form className="container" onSubmit={ this.onSubmit.bind(this) }>
             <div className="row">
               <div className="input-field col s10">
@@ -36,13 +36,13 @@ export default class ChatInput extends React.Component {
                 </span>
               </div>
               <div className="input-field col s2">
-                <button type="submit" className="waves-effect waves-light btn-floating btn-large">
+                <button type="submit" className="waves-effect waves-light btn-floating btn-large blue">
                   <i className="material-icons">send</i>
                 </button>
               </div>
             </div>
           </form>
-        </footer>
+        </div>
       )
   }
 }
