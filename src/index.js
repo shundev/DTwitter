@@ -1,8 +1,17 @@
+import 'babel-polyfill'
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import { Provider } from 'react-redux'
+
+import { store, sagaMiddleware } from './store'
+import rootSage from './sagas'
+import App from './containers/App';
+
+sagaMiddleware.run(rootSage);
 
 ReactDOM.render(
-  <App />,
+  <Provider store={ store }>
+      <App />
+  </Provider>,
   document.getElementById('root')
 );
