@@ -1,6 +1,10 @@
+# Decentralized Twitter-like message app on Ethereum blockchain
+
+## Run
+
 ```
-git clone git@github.com:shunsukehondo/dmsg.git
-cd dmsg
+git clone git@github.com:shunsukehondo/DTwitter.git
+cd DTwitter
 npm install
 npm start
 ```
