@@ -5,6 +5,7 @@ import * as actionTypes from '../constants/actionTypes';
 
 // 初期状態に追加するときは以下に追加
 const INITIAL_STATE = {
+    userAddress: "0x0",
     web3: null,
     contractInstance: null,
 }
