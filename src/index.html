@@ -5,26 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
-    <link rel="stylesheet" href="components/ChatHistory.styl">
-    <link rel="stylesheet" href="components/ChatInput.styl">
-    <title>Messanger dApp</title>
+    <link rel="stylesheet" href="index.styl">
+    <link rel="stylesheet" href="components/Timeline.styl">
+    <link rel="stylesheet" href="components/MessageInput.styl">
+    <title>Twitter-like Dapp</title>
   </head>
   <body>
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
     <div id="root"></div>
+      <!-- App Start -->
       <div class="App">
 
-        <!-- メッセージ入力＆送信 -->
-        <div id="chatinput" class="blue">
+        <!-- MessageInput Start -->
+        <div id="messageinput" class="blue">
           <form class="container" onSubmit="alert('onSubmit');">
             <div class="row">
               <div class="input-field col s10">
                 <i class="prefix material-icons">chat</i>
                 <input ref="txtMessage" type="text" placeholder="Type your message" />
-                <span class="chip left">
-                  <img src="//robohash.org/user1?set=set2&bgset=bg2&size=70x70" />
+                <span class="chip left white">
                   <span>You: user1</span>
                 </span>
               </div>
@@ -36,31 +37,34 @@
             </div>
           </form>
         </div>
+        <!-- MessageInput End -->
 
-        <!-- メッセージリスト -->
-        <ul class="collection">
-          <li class="collection-item avatar" key=1>
-            <img src="//robohash.org/user1?set=set2&bgset=bg2&size=70x70" alt="user1" class="circle" />
-            <span class="title">From user1</span>
-            <p>
-              <i class="prefix tiny material-icons">alarm</i>
-              <span class="message-date">100000000000</span>
-              <br />
-              <span>Hello, Im user1.</span>
-            </p>
-          </li>
-          <li class="collection-item avatar" key=2>
-            <img src="//robohash.org/user2?set=set2&bgset=bg2&size=70x70" alt="user2" class="circle" />
-            <span class="title">From user2</span>
-            <p>
-              <i class="prefix tiny material-icons">alarm</i>
-              <span class="message-date">110000000000</span>
-              <br />
-              <span>Nice to meet you.</span>
-            </p>
-          </li>
-        </ul>
+        <!-- Timeline Start -->
+        <div id="timeline">
+          <ul class="collection">
+            <li class="collection-item" key=1>
+              <span class="title">From user1</span>
+              <p>
+                <i class="prefix tiny material-icons">alarm</i>
+                <span class="message-date">100000000000</span>
+                <br />
+                <span>Hello, Im user1.</span>
+              </p>
+            </li>
+            <li class="collection-item" key=2>
+              <span class="title">From user2</span>
+              <p>
+                <i class="prefix tiny material-icons">alarm</i>
+                <span class="message-date">110000000000</span>
+                <br />
+                <span>Nice to meet you.</span>
+              </p>
+            </li>
+          </ul>
+        </div>
+        <!-- Timeline End -->
       </div>
+      <!-- App End -->
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
