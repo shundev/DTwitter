@@ -20,7 +20,7 @@ function* fetchWeb3ConnectionAsync() {
     const accounts = yield getAccounts
     const instance = web3.eth.contract(dtwitterContract.abi).at(dtwitterContract.address)
 
-    instance.MessageSent({sender: accounts[0]})
+    instance.MessageSent()
     .watch((err, result) => {
         console.log("Message mined!")
     })
@@ -41,7 +41,7 @@ const getAccounts = new Promise(function(resolve, reject) {
 const dummyMsg = {
     Id: Math.floor(Math.random() * 100000000),
     Who: "user1",
-    What: action.payload,
+    What: "hello",
     When: (new Date().valueOf()) / 1000
 }
 

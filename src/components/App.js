@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { createStore } from 'redux'
 
+import { store } from '../store'
 import * as actionTypes from '../constants/actionTypes'
 
 class App extends Component {
