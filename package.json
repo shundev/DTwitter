@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "parcel ./src/index.html -p 3000",
-    "build": "parcel build --public-url '/dt-demo/' ./src/index.html",
+    "build": "parcel build --public-url '/dt-sample/' ./src/index.html",
     "clean": "rm -rf ./dist/*"
   },
   "keywords": [
