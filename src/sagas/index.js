@@ -16,13 +16,13 @@ function* watchAndLog() {
 }
 
 function* fetchTimelineAsync() {
-    const { contract, userAddress } = yield select()
-    const msgIds = yield getMessages(contract, userAddress)
+    const { contractInstance, userAddress } = yield select()
+    const msgIds = yield getMessages(contractInstance, userAddress)
     const getMessageWorkers = []
     for (var i=0; i<msgIds.length; i++) {
         // 0はそれ以上メッセージが無いということ
         if (msgIds[i] == 0) break;
-        getMessageWorkers.push(call(getMessage, contract, userAddress, msgId))
+        getMessageWorkers.push(call(getMessage, contractInstance, userAddress, msgIds[i]))
     }
 
     // すべての通信完了を待つ
@@ -60,17 +60,18 @@ const getMessage = (contract, userAddress, msgId) => {
     })
 }
 
-function* sendMessageAsync(msg) {
-    const { contract, userAddress } = yield select()
+function* sendMessageAsync(action) {
+    const { contractInstance, userAddress } = yield select()
 
+    const text = action.payload
     // 結果は使わないので捨てる
-    yield sendMessage(contract, userAddress, msg)
+    yield sendMessage(contractInstance, userAddress, text)
 
     // マイニング完了まで表示する仮メッセージ
     const dummyMsg = {
         Id: Math.floor(Math.random() * 100000000),
         Who: userAddress,
-        What: msg,
+        What: text,
         When: (new Date().valueOf()) / 1000
     }
 
