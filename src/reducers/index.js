@@ -6,6 +6,7 @@ import * as actionTypes from '../constants/actionTypes';
 // 初期状態に追加するときは以下に追加
 const INITIAL_STATE = {
     userAddress: "0x0",
+    messages: [],
     web3: null,
     contractInstance: null,
 }
@@ -21,6 +22,15 @@ export default function dmsgReducer(state = INITIAL_STATE, action = {})
                 contractInstance: action.contractInstance
             })
         // アクションの処理は以下に追記
+        case actionTypes.FETCH_TIMELINE_SUCCESS:
+            return Object.assign({}, state, {
+                messages: action.payload
+            })
+        case actionTypes.ADD_MESSAGE:
+            // リストの先頭に追加
+            return Object.assign({}, state, {
+                messages: [action.payload].concat(state.messages)
+            })
         default:
             return state
     }
