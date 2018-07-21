@@ -1,5 +1,6 @@
+// ここに自分のコントラクトのアドレスとABIを入力
 export const dtwitterContract = {
-    address: "0x30b2f362853d49673fb2d7153300078653ea53d2",
+    address: "0x88fe4377be9d2c26f4ca1420a6d10b5c3728c91c",
     abi: [
 	{
 		"anonymous": false,
@@ -124,5 +125,6 @@ export const dtwitterContract = {
 		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
-	}]
+	}
+]
 }

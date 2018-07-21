@@ -1,12 +1,12 @@
-import 'babel-polyfill'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { createStore } from 'redux'
 
 import { store } from '../store'
-import ChatInput from './ChatInput'
-import ChatHistory from './ChatHistory'
 import * as actionTypes from '../constants/actionTypes'
+
+import MessageInput from './MessageInput'
+import Timeline from './Timeline'
 
 class App extends Component {
   componentWillMount() {
@@ -14,11 +14,10 @@ class App extends Component {
   }
 
   render() {
-    const { userAddress, history, fetchHistory, sendMessage } = this.props
     return (
       <div className="App">
-        <ChatHistory history={ history } fetchHistory={ fetchHistory }/>
-        <ChatInput userAddress={ userAddress } sendMessage={ sendMessage } />
+        <MessageInput userAddress={ this.props.userAddress } sendMessage={ this.props.sendMessage }/>
+        <Timeline messages={ this.props.messages }/>
       </div>
     )
   }
@@ -26,8 +25,7 @@ class App extends Component {
 
 function mapDispatchToProps (dispatch, ownProps) {
     return {
-        fetchHistory: () => dispatch({ type: actionTypes.FETCH_HISTORY_REQUESTED }),
-        sendMessage: (msg) => dispatch({ type: actionTypes.SEND_MESSAGE_REQUESTED, payload: msg }),
+        sendMessage: (msg) => dispatch({ type: actionTypes.SEND_MESSAGE_REQUESTED, payload: msg })
     }
 }
 

@@ -3,9 +3,10 @@ import { fromJS } from 'immutable'
 
 import * as actionTypes from '../constants/actionTypes';
 
+// 初期状態に追加するときは以下に追加
 const INITIAL_STATE = {
     userAddress: "0x0",
-    history: [],
+    messages: [],
     web3: null,
     contractInstance: null,
 }
@@ -14,23 +15,21 @@ export default function dmsgReducer(state = INITIAL_STATE, action = {})
 {
     switch (action.type)
     {
-        case actionTypes.ADD_MESSAGE:
-            return Object.assign({}, state, {
-                history: [action.payload].concat(state.history)
-            })
-        case actionTypes.SET_USER_ADDRESS:
-            return Object.assign({}, state, {
-                userAddress: action.payload
-            })
         case actionTypes.FETCH_WEB3_CONNECTION_SUCCESS:
             return Object.assign({}, state, {
                 web3: action.web3,
                 userAddress: action.userAddress,
                 contractInstance: action.contractInstance
             })
-        case actionTypes.FETCH_HISTORY_SUCCESS:
+        // アクションの処理は以下に追記
+        case actionTypes.FETCH_TIMELINE_SUCCESS:
             return Object.assign({}, state, {
-                history: action.payload
+                messages: action.payload
+            })
+        case actionTypes.ADD_MESSAGE:
+            // リストの先頭に追加
+            return Object.assign({}, state, {
+                messages: [action.payload].concat(state.messages)
             })
         default:
             return state
